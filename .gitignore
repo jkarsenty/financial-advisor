@@ -1,0 +1,107 @@
+############################
+# Environnements & dépendances
+############################
+
+# Environnement local Python (uv, venv)
+.venv/
+uv.lock
+uv.lock.backup
+
+# Conda environment (optionnel si tu veux le commiter)
+*.conda
+*.yaml
+
+############################
+# Python build & caches
+############################
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pkl
+*.log
+
+############################
+# Outils & développement
+############################
+
+# VSCode
+.vscode/
+.settings/
+*.code-workspace
+
+# Pytest
+.pytest_cache/
+
+# Mypy
+.mypy_cache/
+
+# Coverage
+.coverage
+coverage.xml
+htmlcov/
+
+############################
+# Données locales
+############################
+
+# JSON produits par le storage (Step 0)
+data/
+*.json
+
+############################
+# Configs sensibles
+############################
+
+# Variables d’environnement
+.env
+.env.*
+
+############################
+# Docker
+############################
+
+# Docker compose override files
+docker-compose.override.yml
+
+# Images / layers
+docker/*.tar
+*.img
+
+############################
+# FastAPI / Streamlit (futurs)
+############################
+
+# Streamlit static state
+.streamlit/
+
+# Artefacts ML (modèles, checkpoints)
+models/
+*.h5
+*.pt
+*.pth
+
+############################
+# Autres
+############################
+
+.DS_Store
+Thumbs.db
+
+############################
+# Temporaire
+############################
+tests/*
+
+############################
+# Notes
+############################
+_notes.txt
+
+############################
+# Requirements et settings
+############################
+settings.py
+.env.example
+pyproject.toml
