@@ -22,24 +22,28 @@ Cette première étape pose les fondations du projet :
 
 ```
 financial-advisor/
-├── financial_advisor/
-│   ├── __init__.py
-│   └── core/
+├── src/
+│   └── financial_advisor/
 │       ├── __init__.py
-│       ├── models.py
-│       ├── incomes.py
-│       ├── expenses.py
-│       ├── calculations.py
-│       ├── categories.py
-│       └── storage.py
+│       ├── core/
+│       │   ├── __init__.py
+│       │   ├── incomes.py
+│       │   ├── expenses.py
+│       │   ├── categories.py
+│       │   ├── calculations.py
+│       │   ├── storage.py
+│       │   └── models.py
+│       │
+│       └── main.py   (temporaire, sera remplacé plus tard)
 │
 ├── tests/
-│   ├── __init__.py
 │   └── core/
-│       ├── test_models.py
-│       └── test_calculations.py
+│       ├── test_categories.py
+│       ├── test_incomes.py
+│       ├── test_expenses.py
+│       ├── test_calculations.py
+│       └── test_storage.py
 │
-├── requirements.txt
 ├── pyproject.toml
 └── README.md
 ```
