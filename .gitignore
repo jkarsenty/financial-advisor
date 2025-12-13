@@ -90,18 +90,32 @@ models/
 Thumbs.db
 
 ############################
+# Packaging
+############################
+
+*.egg-info/
+src/*.egg-info/
+**/*.egg-info/
+
+############################
 # Temporaire
 ############################
-tests/*
+
+tmp/
+temp/
 
 ############################
 # Notes
 ############################
-_notes.txt
+
+notes/
+notes*
+notes_*
 
 ############################
 # Requirements et settings
 ############################
+
 settings.py
 .env.example
 pyproject.toml
