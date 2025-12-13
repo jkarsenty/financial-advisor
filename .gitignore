@@ -98,13 +98,6 @@ src/*.egg-info/
 **/*.egg-info/
 
 ############################
-# Temporaire
-############################
-
-tmp/
-temp/
-
-############################
 # Notes
 ############################
 
@@ -113,9 +106,11 @@ notes*
 notes_*
 
 ############################
-# Requirements et settings
+# Temporaire
 ############################
+
+tmp/
+temp/
 
 settings.py
 .env.example
-pyproject.toml
