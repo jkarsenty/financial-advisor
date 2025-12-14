@@ -44,8 +44,9 @@ def create_income(
     return {
         "amount": amount,
         "category": normalize_category(category),
-        "date": date_,
         "description": description,
+        "date_": str(date_),
+        "type": "income",
     }
 
 

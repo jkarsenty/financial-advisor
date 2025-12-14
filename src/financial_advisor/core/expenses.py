@@ -48,9 +48,12 @@ def create_expense(
     return {
         "amount": normalized_amount,
         "category": normalize_category(category),
-        "date": date_,
         "description": description,
+        "date_": str(date_),
+        "type": "expense"
     }
+
+        
 
 
 # a ajouter dans les tests
