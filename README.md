@@ -42,7 +42,7 @@ L’application expose désormais une **API REST fonctionnelle**, construite sur
 financial-advisor/
 ├── src/
 │   └── financial_advisor/
-│       ├── **init**.py
+│       ├── __init__.py
 │       │
 │       ├── core/                  # Logique métier pure
 │       │   ├── incomes.py
@@ -67,7 +67,11 @@ financial-advisor/
 │   └── transactions.json          # Stockage local temporaire
 │
 ├── tests/
-│   └── core/                      # Tests unitaires (Step 0)
+│   ├── core/                      # Tests unitaires (Step 0)
+│   └── api/                       # Tests unitaires/Integration API (Step 1)
+│
+├── scripts/
+│   └── seed_dev_data.py
 │
 ├── pyproject.toml
 ├── requirements.txt
@@ -87,6 +91,14 @@ pip install -e .
 ````
 
 ---
+
+## Données de développement
+
+Pour peupler l’application avec des données fictives (dev uniquement) :
+
+```bash
+python scripts/seed_dev_data.py
+```
 
 ## Lancer l’API
 
