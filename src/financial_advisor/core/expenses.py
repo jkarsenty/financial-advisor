@@ -52,17 +52,3 @@ def create_expense(
         "date_": str(date_),
         "type": "expense"
     }
-
-        
-
-
-# a ajouter dans les tests
-def validate_expense(expense: Transaction) -> bool:
-    """
-    Vérifie la validité d'une dépense.
-
-    TODO:
-    - Vérifier montant < 0 ou normaliser
-    - Vérifier que la catégorie appartient aux dépenses
-    """
-    return True

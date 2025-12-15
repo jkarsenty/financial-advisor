@@ -48,16 +48,3 @@ def create_income(
         "date_": str(date_),
         "type": "income",
     }
-
-
-# a ajouter dans les tests
-def validate_income(income: Transaction) -> bool:
-    """
-    Vérifie la validité d'un revenu.
-
-    TODO:
-    - Vérifier montant > 0
-    - Vérifier catégorie valide
-    - Vérifier format des champs
-    """
-    return True
