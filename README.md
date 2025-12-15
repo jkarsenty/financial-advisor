@@ -125,6 +125,6 @@ pytest -v
 
 ---
 
-## 📄 Licence
+## Licence
 
 MIT
