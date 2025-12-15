@@ -77,7 +77,7 @@ def expense_ratio(incomes: List[Transaction], expenses: List[Transaction]) -> fl
     Calcule le ratio dépenses / revenus.
 
     Returns:
-        Un pourcentage exprimé entre 0 et 1.
+        Un pourcentage exprimé entre 0 et 1, arrondi à 4 décimales.
         Si aucun revenu, retourne 0 pour éviter une division par zéro.
     """
     total_inc = total_incomes(incomes)
@@ -85,28 +85,41 @@ def expense_ratio(incomes: List[Transaction], expenses: List[Transaction]) -> fl
         return 0.0
 
     total_exp = abs(total_expenses(expenses))
-    return total_exp / total_inc
+    ratio = total_exp / total_inc
+
+    return round(ratio, 4)
 
 
-def summary(incomes: List[Transaction], expenses: List[Transaction]) -> dict:
+def summary(transactions: List[Transaction]) -> dict:
     """
-    Génère un résumé financier utilisable par l'API ou le frontend.
+    Generate a financial summary from a list of transactions.
+
+    This function contains pure business logic and is independent
+    from any API, storage, or frontend concerns.
+
+    Args:
+        transactions: List of transactions. Each transaction must contain:
+            - amount (float)
+            - type ("income" or "expense")
 
     Returns:
-        dict contenant :
+        dict containing:
             - total_incomes
             - total_expenses
-            - living_balance
+            - remaining
             - expense_ratio
     """
-    total_inc = total_incomes(incomes)
-    total_exp = total_expenses(expenses)
-    balance = living_balance(incomes, expenses)
+    incomes = [t for t in transactions if t["type"] == "income"]
+    expenses =[t for t in transactions if t["type"] == "expense"]
+
+    total_incomes_ = total_incomes(incomes)
+    total_expenses_ = total_expenses(expenses)
+    remaining = living_balance(incomes, expenses)
     ratio = expense_ratio(incomes, expenses)
 
     return {
-        "total_incomes": total_inc,
-        "total_expenses": total_exp,
-        "living_balance": balance,
+        "total_incomes": total_incomes_,
+        "total_expenses": total_expenses_,
+        "remaining": remaining,
         "expense_ratio": ratio,
     }

@@ -32,11 +32,11 @@ class SummaryResponse(BaseModel):
     Represents the aggregated financial summary returned by the API.
     """
 
-    total_income: float = Field(..., description="Sum of all recorded incomes.")
+    total_incomes: float = Field(..., description="Sum of all recorded incomes.")
     total_expenses: float = Field(..., description="Sum of all recorded expenses.")
     remaining: float = Field(..., description="Remaining balance (income - expenses).")
-    fixed_ratio: Optional[float] = Field(
-        None, description="Ratio of fixed expenses to total expenses (if applicable)."
+    expense_ratio: Optional[float] = Field(
+        None, description="Ratio of expenses to total incomes (if applicable)."
     )
     transactions: List[TransactionItem] = Field(
         ..., description="List of all recorded incomes and expenses."

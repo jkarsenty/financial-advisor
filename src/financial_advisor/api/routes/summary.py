@@ -58,10 +58,10 @@ def get_summary() -> SummaryResponse:
         ]
 
         return SummaryResponse(
-            total_income=summary_data["total_income"],
+            total_incomes=summary_data["total_incomes"],
             total_expenses=summary_data["total_expenses"],
             remaining=summary_data["remaining"],
-            fixed_ratio=summary_data.get("fixed_ratio"),
+            expense_ratio=summary_data["expense_ratio"],
             transactions=items,
         )
 
