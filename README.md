@@ -1,32 +1,50 @@
 # Financial Advisor
 
 MVP de gestion de finances personnelles développé en Python.  
-Ce projet évoluera en plusieurs étapes : logique métier, API, frontend, ML, Docker, infrastructure cloud et CI/CD.
+Ce projet évoluera en plusieurs étapes : logique métier, API, frontend, infrastructure (Docker/cloud), IA et CI/CD.
 
 ---
 
-## Étape actuelle : Step 0 – Core Logic
+## Objectif du projet
 
-Cette première étape pose les fondations du projet :
+Construire une application complète permettant :
 
-- Modèles internes (revenus, dépenses)
-- Gestion des catégories
-- Calculs financiers : totaux, reste à vivre, ratios
-- Stockage local simple (JSON)
-- Tests unitaires avec pytest
-- Structure de projet propre et évolutive
+- la saisie de revenus et dépenses
+- la catégorisation
+- le calcul de métriques financières (totaux, reste à vivre, ratios)
+- l’exposition via une API REST (FastAPI)
+- un frontend interactif (Streamlit)
+- un déploiement industrialisé (Docker, cloud)
+- l’ajout progressif de fonctionnalités IA
+- une chaîne CI/CD propre (GitHub Actions)
 
 ---
 
-## Structure du projet (Step 0)
+## Étape actuelle : Backend API (FastAPI)
+
+L’application expose désormais une **API REST fonctionnelle**, construite sur une logique métier robuste.
+
+### Fonctionnalités disponibles
+
+- Création de revenus (`POST /api/income`)
+- Création de dépenses (`POST /api/expense`)
+- Consultation du résumé financier (`GET /api/summary`)
+- Health check (`GET /health`)
+- Validation automatique des entrées (Pydantic)
+- Documentation interactive Swagger (/docs)
+
+---
+
+## Structure du projet (Step 1)
 
 ```
+
 financial-advisor/
 ├── src/
 │   └── financial_advisor/
-│       ├── __init__.py
-│       ├── core/
-│       │   ├── __init__.py
+│       ├── **init**.py
+│       │
+│       ├── core/                  # Logique métier pure
 │       │   ├── incomes.py
 │       │   ├── expenses.py
 │       │   ├── categories.py
@@ -34,49 +52,79 @@ financial-advisor/
 │       │   ├── storage.py
 │       │   └── models.py
 │       │
-│       └── main.py   (temporaire, sera remplacé plus tard)
+│       └── api/                   # Backend FastAPI
+│           ├── main.py
+│           ├── routes/
+│           │   ├── incomes.py
+│           │   ├── expenses.py
+│           │   └── summary.py
+│           └── schemas/
+│               ├── income_schema.py
+│               ├── expense_schema.py
+│               └── summary_schema.py
+│
+├── data/
+│   └── transactions.json          # Stockage local temporaire
 │
 ├── tests/
-│   └── core/
-│       ├── test_categories.py
-│       ├── test_incomes.py
-│       ├── test_expenses.py
-│       ├── test_calculations.py
-│       └── test_storage.py
+│   └── core/                      # Tests unitaires (Step 0)
 │
 ├── pyproject.toml
+├── requirements.txt
 └── README.md
-```
+
+````
 
 ---
 
 ## Installation
 
-```
+Créer un environnement virtuel (conda, venv, etc.), puis :
+
+```bash
 pip install -r requirements.txt
-```
+pip install -e .
+````
 
 ---
 
-## Exécuter les tests
+## Lancer l’API
 
+Depuis la racine du projet :
+
+```bash
+uvicorn financial_advisor.api.main:app --reload
 ```
+
+Puis ouvrir :
+
+* Swagger UI : [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+* Health check : [http://127.0.0.1:8000/health](http://127.0.0.1:8000/health)
+
+---
+
+## Tests
+
+### Tests unitaires (core)
+
+```bash
 pytest -v
 ```
 
 ---
 
-## Objectif des prochaines étapes
+## Roadmap
 
-- Étape 1 : API FastAPI  
-- Étape 2 : Frontend Streamlit  
-- Étape 3 : Docker + PostgreSQL  
-- Étape 4 : Machine Learning (classification des dépenses)  
-- Étape 5 : Déploiement cloud  
-- Étape 6 : CI/CD GitHub Actions  
+* Step 0 : Core Logic (Python) --> OK
+* Step 1 : Backend API (FastAPI) --> OK
+* Step 2 : Frontend Streamlit
+* Step 3 : Docker + PostgreSQL
+* Step 4 : Machine Learning
+* Step 5 : Déploiement cloud
+* Step 6 : CI/CD complet
 
 ---
 
-## Licence
+## 📄 Licence
 
 MIT
