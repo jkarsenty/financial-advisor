@@ -11,6 +11,7 @@ dependencies = [
 dev = [
     "pytest",
     "httpx",
+    "streamlit",
 ]
 
 [tool.setuptools.packages.find]
