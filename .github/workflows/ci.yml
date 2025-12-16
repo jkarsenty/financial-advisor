@@ -1,8 +1,8 @@
-name: CI 
+name: CI - Financial Advisor
 
 on:
   push:
-    branches: [ "main", "dev/frontend" ]
+    branches: [ "main", "dev/frontend", "dev/postgres" ]
   pull_request:
     branches: [ "main" ]
 
@@ -14,21 +14,26 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      - name: Install uv
+      - name: Build and start services
         run: |
-          python -m pip install --upgrade pip
-          pip install uv
+          docker compose build
+          docker compose up -d
 
-      - name: Install dependencies
+      - name: Wait for Postgres to be ready
         run: |
-          uv pip install --system -r requirements.txt
-          uv pip install --system -e .[dev]
+          until docker compose exec -T db pg_isready -U financial_user; do
+            echo "Waiting for postgres..."
+            sleep 2
+          done
 
-      - name: Run tests
+      - name: Run tests inside API container
         run: |
-          pytest -v
+          docker compose exec -T api pytest -v
+
+      - name: Stop containers
+        if: always()
+        run: |
+          docker compose down -v
