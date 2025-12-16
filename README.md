@@ -20,7 +20,7 @@ Construire une application complète permettant :
 
 ---
 
-## Étape actuelle : Backend API & Frontend Streamlit
+## Étape actuelle : Dockerisation (API + Frontend)
 
 L’application dispose désormais :
 
@@ -61,6 +61,26 @@ Le frontend :
 * est conçu pour être facilement remplaçable (React, etc.)
 
 ---
+
+## Docker (API + Frontend)
+
+L’application est désormais entièrement dockerisée.
+
+Deux services sont fournis via Docker Compose :
+
+- **API FastAPI**
+- **Frontend Streamlit**
+
+La communication entre les services se fait via le réseau Docker interne.
+
+### Architecture
+
+- API : `http://api:8000`
+- Frontend : `http://frontend:8501`
+- Accès local :
+  - API : http://localhost:8000/docs
+  - Frontend : http://localhost:8501
+
 
 ## Structure du projet (Step 1)
 
@@ -109,6 +129,13 @@ financial-advisor/
 │
 ├── scripts/
 │   └── seed_dev_data.py
+│
+├── docker/
+│   ├── Dockerfile.api             # Image API FastAPI
+│   └── Dockerfile.frontend        # Image Frontend Streamlit
+│
+├── docker-compose.yml             # Orchestration API + Frontend
+├── .env.example                   # Variables d’environnement (exemple)
 │
 ├── pyproject.toml
 ├── requirements.txt
@@ -164,6 +191,27 @@ Accès :
 
 ---
 
+## Lancer l’application avec Docker
+
+### Prérequis
+- Docker
+- Docker Compose
+
+### Démarrage
+
+```bash
+cp .env.example .env
+docker compose up --build
+```
+
+### Accès
+
+API (Swagger) : http://localhost:8000/docs
+
+Frontend : http://localhost:8501
+
+--- 
+
 ## Tests
 
 ```bash
@@ -183,10 +231,11 @@ Les tests couvrent :
 * Step 0 : Core Logic (Python) -> OK
 * Step 1 : Backend API (FastAPI) -> OK
 * Step 2 : Frontend Streamlit -> OK
-* Step 3 : Docker + PostgreSQL (en cours)
-* Step 4 : Machine Learning
-* Step 5 : Déploiement cloud
-* Step 6 : CI/CD complet
+* Step 3 : Docker (API + Frontend) -> OK
+* Step 4 : PostgreSQL (en cours)
+* Step 5 : Machine Learning
+* Step 6 : Déploiement cloud
+* Step 7 : CI/CD complet
 
 ---
 

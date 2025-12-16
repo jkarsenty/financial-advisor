@@ -1,0 +1,32 @@
+# Image de base
+FROM python:3.11-slim
+
+# Empêche la création de fichiers .pyc
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Dossier de travail dans le conteneur
+WORKDIR /app
+
+# Installer les dépendances système minimales
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copier les fichiers de dépendances
+COPY requirements.txt pyproject.toml ./
+
+# Copier le code source
+COPY src ./src
+COPY data ./data
+
+# Installer les dépendances Python
+RUN pip install --upgrade pip \
+    && pip install -r requirements.txt \
+    && pip install -e .
+
+# Exposer le port de l'API
+EXPOSE 8000
+
+# Commande de lancement
+CMD ["uvicorn", "financial_advisor.api.main:app", "--host", "0.0.0.0", "--port", "8000"]
