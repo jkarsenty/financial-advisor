@@ -20,9 +20,18 @@ Construire une application complète permettant :
 
 ---
 
-## Étape actuelle : Backend API (FastAPI)
+## Étape actuelle : Backend API & Frontend Streamlit
 
-L’application expose désormais une **API REST fonctionnelle**, construite sur une logique métier robuste.
+L’application dispose désormais :
+
+* d’une **API REST FastAPI fonctionnelle**
+* d’un **frontend Streamlit** consommant exclusivement l’API
+
+La logique métier reste centralisée dans le backend ; le frontend agit uniquement comme client.
+
+---
+
+## Backend API (FastAPI)
 
 ### Fonctionnalités disponibles
 
@@ -32,6 +41,24 @@ L’application expose désormais une **API REST fonctionnelle**, construite sur
 - Health check (`GET /health`)
 - Validation automatique des entrées (Pydantic)
 - Documentation interactive Swagger (/docs)
+
+---
+
+## Frontend (Streamlit)
+
+Une interface utilisateur simple permet :
+
+* l’ajout de revenus
+* l’ajout de dépenses
+* la visualisation du résumé financier
+* l’affichage des transactions
+* la gestion propre des erreurs API
+
+Le frontend :
+
+* ne contient aucune logique métier
+* communique uniquement via HTTP avec l’API FastAPI
+* est conçu pour être facilement remplaçable (React, etc.)
 
 ---
 
@@ -52,23 +79,33 @@ financial-advisor/
 │       │   ├── storage.py
 │       │   └── models.py
 │       │
-│       └── api/                   # Backend FastAPI
-│           ├── main.py
-│           ├── routes/
-│           │   ├── incomes.py
-│           │   ├── expenses.py
-│           │   └── summary.py
-│           └── schemas/
-│               ├── income_schema.py
-│               ├── expense_schema.py
-│               └── summary_schema.py
+│       ├── api/                   # Backend FastAPI
+│       │   ├── main.py
+│       │   ├── routes/
+│       │   │   ├── incomes.py
+│       │   │   ├── expenses.py
+│       │   │   └── summary.py
+│       │   └── schemas/
+│       │       ├── income_schema.py
+│       │       ├── expense_schema.py
+│       │       └── summary_schema.py
+│       │
+│       └── frontend/              # Frontend Streamlit
+│           ├── app.py
+│           ├── api_client.py
+│           ├── config.py
+│           └── _pages/
+│               ├── dashboard.py
+│               ├── incomes.py
+│               └── expenses.py
 │
 ├── data/
 │   └── transactions.json          # Stockage local temporaire
 │
 ├── tests/
-│   ├── core/                      # Tests unitaires (Step 0)
-│   └── api/                       # Tests unitaires/Integration API (Step 1)
+│   ├── core/                      # Tests unitaires core
+│   ├── api/                       # Tests API
+│   └── frontend/                  # Tests client frontend
 │
 ├── scripts/
 │   └── seed_dev_data.py
@@ -100,37 +137,53 @@ Pour peupler l’application avec des données fictives (dev uniquement) :
 python scripts/seed_dev_data.py
 ```
 
-## Lancer l’API
+## Lancer l’application en local
 
-Depuis la racine du projet :
+### Backend (API)
 
 ```bash
 uvicorn financial_advisor.api.main:app --reload
 ```
 
-Puis ouvrir :
+Accès :
 
 * Swagger UI : [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 * Health check : [http://127.0.0.1:8000/health](http://127.0.0.1:8000/health)
 
 ---
 
-## Tests
+### Frontend (Streamlit)
 
-### Tests unitaires (core)
+```bash
+streamlit run src/financial_advisor/frontend/app.py
+```
+
+Accès :
+
+* Frontend : [http://localhost:8501](http://localhost:8501)
+
+---
+
+## Tests
 
 ```bash
 pytest -v
 ```
 
+Les tests couvrent :
+
+* la logique métier (core)
+* l’API FastAPI
+* le client frontend (mock HTTP)
+
 ---
 
 ## Roadmap
 
-* Step 0 : Core Logic (Python) --> OK
-* Step 1 : Backend API (FastAPI) --> OK
-* Step 2 : Frontend Streamlit
-* Step 3 : Docker + PostgreSQL
+* Step 0 : Core Logic (Python) -> OK
+* Step 1 : Backend API (FastAPI) -> OK
+* Step 2 : Frontend Streamlit -> OK
+* Step 3 : Docker + PostgreSQL (en cours)
 * Step 4 : Machine Learning
 * Step 5 : Déploiement cloud
 * Step 6 : CI/CD complet
