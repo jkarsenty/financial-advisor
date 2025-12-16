@@ -1,8 +1,8 @@
-name: CI - FastAPI backend
+name: CI 
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "dev/frontend" ]
   pull_request:
     branches: [ "main" ]
 
