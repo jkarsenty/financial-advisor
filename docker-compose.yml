@@ -1,4 +1,19 @@
 services:
+
+  db:
+    image: postgres:16
+    container_name: financial-advisor-db
+    environment:
+      POSTGRES_DB: financial_advisor
+      POSTGRES_USER: financial_user
+      POSTGRES_PASSWORD: financial_password
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./scripts/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
   api:
     build:
       context: .
@@ -10,6 +25,8 @@ services:
       - ./data:/app/data
     env_file:
       - .env
+    depends_on:
+      - db
     restart: unless-stopped
 
   frontend:
@@ -24,3 +41,6 @@ services:
     depends_on:
       - api
     restart: unless-stopped
+
+volumes:
+  pgdata:

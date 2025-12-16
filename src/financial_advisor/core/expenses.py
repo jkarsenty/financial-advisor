@@ -12,21 +12,17 @@ from .models import Transaction
 from .categories import is_valid_expense_category, normalize_category
 
 
-def normalize_amount(amount: float) -> float:
-    """Transforme un montant en montant négatif si nécessaire."""
-    return -abs(amount)
-
-
 def validate_expense_fields(amount: float, category: str) -> None:
     """
     Règles métier :
-    - Le montant doit être négatif (ou sera normalisé).
+    - Le montant doit être strictement positif.
     - La catégorie doit être valide.
     """
+    if amount <= 0:
+        raise ValueError("Le montant d'une dépense doit être positif")
+    
     if not is_valid_expense_category(category):
         raise ValueError(f"Catégorie de dépense invalide : {category}")
-
-    # Le montant sera normalisé, donc pas d'erreur si > 0.
 
 
 def create_expense(
@@ -36,17 +32,15 @@ def create_expense(
     description: Optional[str] = None,
 ) -> Transaction:
     """
-    Crée une dépense validée et normalisée.
+    Crée une dépense validée.
 
     Raises:
         ValueError: si la catégorie est invalide.
     """
     validate_expense_fields(amount, category)
 
-    normalized_amount = normalize_amount(amount)
-
     return {
-        "amount": normalized_amount,
+        "amount": amount,
         "category": normalize_category(category),
         "description": description,
         "date_": str(date_),

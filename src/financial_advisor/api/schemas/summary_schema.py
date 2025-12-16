@@ -3,27 +3,24 @@ Pydantic schemas for the financial summary endpoint.
 
 These schemas define the response structure for aggregated financial data:
 totals, ratios, and the list of all recorded transactions.
-
-TODO:
-- Add transaction IDs once a database is introduced (Step 3)
-- Add date fields when temporal tracking is implemented
 """
 
-from pydantic import BaseModel, Field
+from datetime import date as Date
 from typing import List, Optional
+from uuid import UUID
+
+from pydantic import BaseModel, Field
 
 
 class TransactionItem(BaseModel):
     """
     Represents a generic income or expense entry included in the summary.
-    
-    Note:
-        An optional date or ID field can be added later.
     """
-
+    id: UUID = Field(..., description="Unique transaction identifier.")
     amount: float = Field(..., description="Transaction amount.")
     category: str = Field(..., description="Transaction category.")
     description: Optional[str] = Field(None, description="Optional transaction description.")
+    date: Date = Field(..., description="Transaction date.")
     type: str = Field(..., description="'income' or 'expense'")
 
 

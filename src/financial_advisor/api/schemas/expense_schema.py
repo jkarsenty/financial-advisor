@@ -3,14 +3,13 @@ Pydantic schemas for expense-related API operations.
 
 These schemas validate incoming data for expense creation requests
 and define the structure of API responses.
-
-TODO:
-- Add optional ID field once we move to a real database (Step 3)
 """
 
 from pydantic import BaseModel, Field
-from typing import Optional
 from datetime import date
+from typing import Optional
+from uuid import UUID
+
 
 class ExpenseInput(BaseModel):
     """Schema representing an expense entry provided by the user."""
@@ -25,12 +24,10 @@ class ExpenseInput(BaseModel):
 class ExpenseResponse(BaseModel):
     """
     Schema representing an expense entry returned by the API.
-
-    Note:
-        `id` will be added once a database is introduced.
     """
-
+    id: UUID
     amount: float
     category: str
     description: Optional[str]
     date_: date
+    type: str = "expense"

@@ -6,7 +6,7 @@ from financial_advisor.core.expenses import create_expense
 
 def test_create_valid_expense():
     exp = create_expense(50, "courses", date.today())
-    assert exp["amount"] < 0
+    assert exp["amount"] > 0
     assert exp["category"] == "courses"
 
 

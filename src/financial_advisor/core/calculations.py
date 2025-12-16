@@ -65,7 +65,7 @@ def living_balance(incomes: List[Transaction], expenses: List[Transaction]) -> f
     Returns:
         Reste à vivre.
     """
-    return total_incomes(incomes) + total_expenses(expenses)
+    return total_incomes(incomes) - total_expenses(expenses)
 
 
 # -------------------------------------------------------------------

@@ -14,7 +14,7 @@ TODO:
 from fastapi import APIRouter, HTTPException
 from pathlib import Path
 
-from financial_advisor.core.storage import load_transactions
+from financial_advisor.core.storage_db import fetch_transactions
 from financial_advisor.core.calculations import summary as compute_summary
 
 from financial_advisor.api.schemas.summary_schema import (
@@ -41,7 +41,17 @@ def get_summary() -> SummaryResponse:
         HTTPException: On failure to compute the summary.
     """
     try:
-        transactions = load_transactions(DATA_FILE)
+        raw_transactions = fetch_transactions()
+
+        # Convert amounts to float for calculations
+        transactions = [
+            {
+                **t,
+                "amount": float(t["amount"]),
+            }
+            for t in raw_transactions
+        ]
+
 
         # Compute summary using core logic
         summary_data = compute_summary(transactions)
@@ -49,9 +59,11 @@ def get_summary() -> SummaryResponse:
         # Convert raw transactions → Pydantic TransactionItem instances
         items = [
             TransactionItem(
+                id=t["id"],
                 amount=t["amount"],
                 category=t["category"],
                 description=t.get("description"),
+                date=t["date"],
                 type=t["type"],
             )
             for t in transactions

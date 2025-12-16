@@ -15,9 +15,9 @@ def test_totals():
     inc2 = create_income(500, "prime", date.today())
     assert total_incomes([inc1, inc2]) == 2500
 
-    exp1 = create_expense(100, "courses", date.today())  # devient négatif
+    exp1 = create_expense(100, "courses", date.today())
     exp2 = create_expense(50, "transport", date.today())
-    assert total_expenses([exp1, exp2]) == -150
+    assert total_expenses([exp1, exp2]) == 150
 
 
 def test_living_balance():

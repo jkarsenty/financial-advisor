@@ -3,14 +3,13 @@ Pydantic schemas for income-related API operations.
 
 These schemas validate incoming data for income creation requests
 and define the structure of API responses.
-
-TODO:
-- Add optional ID field once we move to a real database (Step 3)
 """
 
 from pydantic import BaseModel, Field
-from typing import Optional
 from datetime import date
+from typing import Optional
+from uuid import UUID
+
 
 class IncomeInput(BaseModel):
     """Schema representing an income entry provided by the user."""
@@ -24,13 +23,12 @@ class IncomeInput(BaseModel):
 class IncomeResponse(BaseModel):
     """
     Schema representing an income entry returned by the API.
-
-    Note:
-        `id` will be added once a database is introduced.
     """
-
+    
+    id: UUID
     amount: float
     category: str
     description: Optional[str]
     date_: date 
+    type: str = "income"
 
