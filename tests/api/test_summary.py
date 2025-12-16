@@ -1,4 +1,4 @@
-def test_get_summary(client, clean_storage):
+def test_get_summary(client, clean_db):
     client.post(
         "/api/income",
         json={"amount": 2000, "category": "salaire"},
@@ -11,8 +11,8 @@ def test_get_summary(client, clean_storage):
     response = client.get("/api/summary")
 
     assert response.status_code == 200
+    
     data = response.json()
-
     assert "total_incomes" in data
     assert "total_expenses" in data
     assert "remaining" in data

@@ -1,12 +1,11 @@
-import json
+import os
 import pytest
-from pathlib import Path
 from fastapi.testclient import TestClient
 
 from financial_advisor.api.main import app
 
+from financial_advisor.api.db import get_connection
 
-DATA_FILE = Path("data/transactions.json")
 
 @pytest.fixture(scope="session")
 def client() -> TestClient:
@@ -15,19 +14,12 @@ def client() -> TestClient:
 
 
 @pytest.fixture(scope="function")
-def clean_storage():
+def clean_db():
     """
-    Reset the transactions JSON file before each test.
-
-    Ensures test isolation and deterministic behavior.
+    Truncate transactions table before each test.
     """
-    # Ensure data directory exists
-    DATA_FILE.parent.mkdir(parents=True, exist_ok=True)
-
-    # Reset file content
-    DATA_FILE.write_text("[]", encoding="utf-8")
-
+    conn = get_connection()
+    with conn.cursor() as cursor:
+        cursor.execute("TRUNCATE TABLE transactions RESTART IDENTITY CASCADE;")
+        conn.commit()
     yield
-
-    # Optional cleanup after test (not strictly necessary here)
-    DATA_FILE.write_text("[]", encoding="utf-8")

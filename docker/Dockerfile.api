@@ -20,6 +20,7 @@ COPY requirements.txt pyproject.toml ./
 COPY src ./src
 COPY data ./data
 COPY scripts ./scripts
+COPY tests/ ./tests
 
 # Installer les dépendances Python
 RUN pip install --upgrade pip \

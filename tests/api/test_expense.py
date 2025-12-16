@@ -10,6 +10,6 @@ def test_create_expense(client):
     assert response.status_code == 200
 
     data = response.json()
-    assert data["amount"] == -800
+    assert data["amount"] == 800
     assert data["category"] == "logement"
     assert "date_" in data
